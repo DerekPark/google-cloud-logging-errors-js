@@ -29,6 +29,7 @@ var StackdriverErrorReporter = function() {};
 /**
  * Initialize the StackdriverErrorReporter object.
  * @param {Object} config - the init configuration.
+ * @param {string} [config.targetUrl] - the base url to send reports to.
  * @param {Object} [config.context={}] - the context in which the error occurred.
  * @param {string} [config.context.user] - the user who caused or was affected by the error.
  * @param {String} config.key - the API key to use to call the API.
@@ -47,6 +48,7 @@ StackdriverErrorReporter.prototype.start = function(config) {
     throw new Error('Cannot initialize: No project ID, target url or custom reporting function provided.');
   }
 
+  baseAPIUrl = config.url;
   this.customReportingFunction = config.customReportingFunction;
   this.apiKey = config.key;
   this.projectId = config.projectId;
@@ -95,6 +97,7 @@ function registerHandlers(reporter) {
  * @param {Error|String} err - The Error object or message string to report.
  * @param {Object} options - Configuration for this report.
  * @param {number} [options.skipLocalFrames=1] - Omit number of frames if creating stack.
+ * @param {Object} extraPayload - other fields to be added to message
  * @returns {Promise} A promise that completes when the report has been sent.
  */
 StackdriverErrorReporter.prototype.report = function(err, options) {
@@ -113,6 +116,8 @@ StackdriverErrorReporter.prototype.report = function(err, options) {
     userAgent: window.navigator.userAgent,
     url: window.location.href,
   };
+
+  payload = {...payload, ...options.extraPayload}
 
   var firstFrameIndex = 0;
   if (typeof err == 'string' || err instanceof String) {
@@ -169,6 +174,7 @@ function resolveError(err, firstFrameIndex) {
 }
 
 function sendErrorPayload(url, payload) {
+  
   var xhr = new XMLHttpRequest();
   xhr.open('POST', url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
