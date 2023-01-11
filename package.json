@@ -1,5 +1,5 @@
 {
-  "name": "stackdriver-errors-js",
+  "name": "google-operations-logging-js",
   "version": "0.12.0",
   "description": "Experimental client-side JavaScript library to report errors to Stackdriver Error Reporting",
   "main": "stackdriver-errors.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoogleCloudPlatform/stackdriver-errors-js"
+    "url": "https://github.com/derekpark/google-operations-logging-js"
   },
   "files": [
     "dist/",

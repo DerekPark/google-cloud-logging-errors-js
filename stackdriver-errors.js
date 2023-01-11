@@ -97,7 +97,7 @@ function registerHandlers(reporter) {
  * @param {Error|String} err - The Error object or message string to report.
  * @param {Object} options - Configuration for this report.
  * @param {number} [options.skipLocalFrames=1] - Omit number of frames if creating stack.
- * @param {Object} extraPayload - other fields to be added to message
+ * @param {Object} [options.extraPayload] - other fields to be added to message
  * @returns {Promise} A promise that completes when the report has been sent.
  */
 StackdriverErrorReporter.prototype.report = function(err, options) {
