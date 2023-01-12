@@ -118,7 +118,7 @@ StackdriverErrorReporter.prototype.report = function(err, options) {
     url: window.location.href,
   };
 
-  payload = {message: {message, extras: options.extras}
+  payload = {message: {message, extras: options.extras}}
 
   var firstFrameIndex = 0;
   if (typeof err == 'string' || err instanceof String) {
