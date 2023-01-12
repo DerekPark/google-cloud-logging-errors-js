@@ -118,8 +118,6 @@ StackdriverErrorReporter.prototype.report = function(err, options) {
     url: window.location.href,
   };
 
-  payload = {message: {message, extras: options.extras}}
-
   var firstFrameIndex = 0;
   if (typeof err == 'string' || err instanceof String) {
     // Transform the message in an error, use try/catch to make sure the stacktrace is populated.
@@ -143,6 +141,7 @@ StackdriverErrorReporter.prototype.report = function(err, options) {
       if (customFunc) {
         return customFunc(payload);
       }
+      payload.message = {message, ...options.extras}
       return sendErrorPayload(reportUrl, payload);
     });
 };
