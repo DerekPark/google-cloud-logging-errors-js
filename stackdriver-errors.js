@@ -38,6 +38,7 @@ var StackdriverErrorReporter = function() {};
  * @param {String} [config.service=web] - service identifier.
  * @param {String} [config.version] - version identifier.
  * @param {Boolean} [config.reportUncaughtExceptions=true] - Set to false to stop reporting unhandled exceptions.
+ * @param {Boolean} [config.reportUnhandledPromiseRejections=true] - Set to false to stop reporting unhandled promise rejections.
  * @param {Boolean} [config.disabled=false] - Set to true to not report errors when calling report(), this can be used when developping locally.
  */
 StackdriverErrorReporter.prototype.start = function(config) {
@@ -97,7 +98,7 @@ function registerHandlers(reporter) {
  * @param {Error|String} err - The Error object or message string to report.
  * @param {Object} options - Configuration for this report.
  * @param {number} [options.skipLocalFrames=1] - Omit number of frames if creating stack.
- * @param {Object} [options.extraPayload] - other fields to be added to message
+ * @param {Object} [options.extras] - other fields to be added to message
  * @returns {Promise} A promise that completes when the report has been sent.
  */
 StackdriverErrorReporter.prototype.report = function(err, options) {
@@ -117,7 +118,7 @@ StackdriverErrorReporter.prototype.report = function(err, options) {
     url: window.location.href,
   };
 
-  payload = {...payload, ...options.extraPayload}
+  payload = {message: {message, extras: options.extras}
 
   var firstFrameIndex = 0;
   if (typeof err == 'string' || err instanceof String) {
