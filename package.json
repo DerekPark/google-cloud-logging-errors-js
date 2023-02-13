@@ -1,6 +1,6 @@
 {
   "name": "google-cloud-logging-errors-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Experimental client-side JavaScript library to report errors to Stackdriver Error Reporting",
   "main": "stackdriver-errors.js",
   "types": "stackdriver-errors.d.ts",
